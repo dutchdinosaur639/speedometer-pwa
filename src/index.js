@@ -17,15 +17,14 @@ const appOpts = {
     body: document.querySelector('body'),
     start: document.querySelector('#start'),
     readout: document.querySelector('#readout'),
-    history: document.querySelector('#history'),
-    showMph: document.querySelector('#show-mph'),
+    showWatt: document.querySelector('#show-watt'),
     showKmh: document.querySelector('#show-kmh'),
   },
-  readoutUnit: readoutUnits.mph,
+  readoutUnit: readoutUnits.watt,
   watchId: null,
-  wakeLock: null,
-  speedHistory: []
+  wakeLock: null
 };
+
 
 document.querySelector('#show-watt').addEventListener('click', (event) => {
   appOpts.readoutUnit = readoutUnits.watt;
@@ -67,8 +66,9 @@ document.querySelector('#start').addEventListener('click', (event) => {
 
 const toggleReadoutButtons = () => {
   appOpts.dom.showKmh.classList.toggle('selected');
-  appOpts.dom.showMph.classList.toggle('selected');
+  appOpts.dom.showWatt.classList.toggle('selected');
 };
+
 
 const startAmbientSensor = () => {
   if ('AmbientLightSensor' in window) {
