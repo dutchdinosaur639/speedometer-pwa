@@ -15,10 +15,6 @@ body {
   text-align: center;
 }
 
-.unit {
-  font-size: 6rem;  /* Pas dit naar wens aan */
-}
-
 @media screen and (max-width: 600px) {
   #readouts {
     flex-direction: column;
@@ -68,3 +64,7 @@ body.dark #start.selected {
   color: #fff;
   border-color: hsl(15, 100%, 18%);
 }
+
+.unit { 
+   font-size: 6rem;  /* Pas dit naar wens aan */ 
+ }
