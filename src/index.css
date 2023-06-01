@@ -15,24 +15,20 @@ body {
   text-align: center;
 }
 
-#readouts > div {
-  flex: 1;
-}
+@media screen and (max-width: 600px) {
+  #readouts {
+    flex-direction: column;
+  }
+  
+  #readout-speed, #readout-watt {
+    font-size: 6rem;
+    line-height: 6rem;
+  }
 
-#readout-speed, #readout-watt {
-  font-size: 12rem;
-  font-family: sans-serif;
-  line-height: 12rem;
-}
-
-button {
-  padding: 1rem 2rem;
-  border-radius: 10px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  font-size: 1.5rem;
-  text-transform: uppercase;
-  margin-top: 1rem;
+  button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
 }
 
 button:focus {
