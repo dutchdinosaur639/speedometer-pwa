@@ -60,8 +60,8 @@ const parsePosition = (position) => {
   const averageSpeed = appOpts.speedHistory.reduce((a, b) => a + b, 0) / 10;
   const averagePower = appOpts.powerHistory.reduce((a, b) => a + b, 0) / 10;
 
-  appOpts.dom.readoutSpeed.textContent = averageSpeed.toFixed(2);
-  appOpts.dom.readoutWatt.textContent = averagePower.toFixed(1);
+ appOpts.dom.readoutSpeed.textContent = speed.toFixed(2);
+appOpts.dom.readoutWatt.textContent = power.toFixed(1);
 };
 
 const startAmbientSensor = () => {
