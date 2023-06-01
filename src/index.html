@@ -10,15 +10,18 @@
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="index.css">
 </head>
-<body>
-  <div id="readout">...</div>
-  <div id="history">...</div>
-  <div id="readoutUnits">
-    <button id="show-watt" class="selected">Watt</button>
-    <button id="show-kmh">km / h</button>
-    <br>
+  <body>
+    <div id="readouts">
+      <div id="readout-speed">
+        <h2>Snelheid (km/h)</h2>
+        <p></p>
+      </div>
+      <div id="readout-watt">
+        <h2>Vermogen (W)</h2>
+        <p></p>
+      </div>
+    </div>
     <button id="start">🔑 Start</button>
-  </div>
-  <script src="index.js"></script>
-</body>
+    <script src="your-script.js"></script>
+  </body>
 </html>
