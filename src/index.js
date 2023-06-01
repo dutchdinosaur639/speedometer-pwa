@@ -1,44 +1,21 @@
 'use strict';
 
-/** @enum {number} */
-const readoutUnits = {
-  watt: 0,
-  kmh: 3.6
-};
-
-// Opgeslagen waarden voor A, B en n.
 const A = 34.82;
 const B = 4.01;
 const n = 8;
 
-/** @const */
 const appOpts = {
   dom: {
     body: document.querySelector('body'),
     start: document.querySelector('#start'),
-    readout: document.querySelector('#readout'),
-    showWatt: document.querySelector('#show-watt'),
-    showKmh: document.querySelector('#show-kmh'),
+    readoutSpeed: document.querySelector('#readout-speed'),
+    readoutWatt: document.querySelector('#readout-watt'),
   },
-  readoutUnit: readoutUnits.watt,
   watchId: null,
-  wakeLock: null
+  wakeLock: null,
+  speedHistory: Array(10).fill(0),
+  powerHistory: Array(10).fill(0),
 };
-
-
-document.querySelector('#show-watt').addEventListener('click', (event) => {
-  appOpts.readoutUnit = readoutUnits.watt;
-  if (!appOpts.dom.showWatt.classList.contains('selected')) {
-    toggleReadoutButtons();
-  }
-});
-
-document.querySelector('#show-kmh').addEventListener('click', (event) => {
-  appOpts.readoutUnit = readoutUnits.kmh;
-  if (!appOpts.dom.showKmh.classList.contains('selected')) {
-    toggleReadoutButtons();
-  }
-});
 
 document.querySelector('#start').addEventListener('click', (event) => {
   if (appOpts.watchId) {
@@ -64,11 +41,28 @@ document.querySelector('#start').addEventListener('click', (event) => {
   }
 });
 
-const toggleReadoutButtons = () => {
-  appOpts.dom.showKmh.classList.toggle('selected');
-  appOpts.dom.showWatt.classList.toggle('selected');
+const calculateP = (v) => {
+  const Cw = A / (1 - Math.pow((v / B), 2));
+  const P = Math.pow(v, 3) * Cw / n;
+  return P;
 };
 
+const parsePosition = (position) => {
+  const speed = position.coords.speed * 3.6; // speed in km/h
+  const power = calculateP(position.coords.speed); // power in watts
+
+  appOpts.speedHistory.shift();
+  appOpts.speedHistory.push(speed);
+
+  appOpts.powerHistory.shift();
+  appOpts.powerHistory.push(power);
+
+  const averageSpeed = appOpts.speedHistory.reduce((a, b) => a + b, 0) / 10;
+  const averagePower = appOpts.powerHistory.reduce((a, b) => a + b, 0) / 10;
+
+  appOpts.dom.readoutSpeed.textContent = averageSpeed.toFixed(2);
+  appOpts.dom.readoutWatt.textContent = averagePower.toFixed(1);
+};
 
 const startAmbientSensor = () => {
   if ('AmbientLightSensor' in window) {
@@ -100,40 +94,4 @@ const startWakeLock = () => {
   }
 }
 
-const calculateP = (v) => {
-  const A = 34.82;
-  const B = 4.01;
-  const n = 8;
-
-  const Cw = A / (1 - Math.pow((v / B), 2));
-  const P = Math.pow(v, 3) * Cw / n;
-
-  return P;
-};
-
-const parsePosition = (position) => {
-  let output;
-  if (appOpts.readoutUnit === readoutUnits.watt) {
-    const v = position.coords.speed;
-    const Cw = A / (1 - (v / B)**2);
-    output = v**3 * Cw / n;
-  } else {
-    output = position.coords.speed * appOpts.readoutUnit;
-  }
-  appOpts.dom.readout.textContent = Math.round(output);
-};
-
-const calculateAverageSpeed = (speeds) => {
-  const sum = speeds.reduce((acc, val) => acc + val, 0);
-  const average = sum / speeds.length;
-  return average;
-};
-
-const startServiceWorker = () => {
-  navigator.serviceWorker.register('service-worker.js', {
-    scope: './'
-  });
-}
-
 startAmbientSensor();
-startServiceWorker();
