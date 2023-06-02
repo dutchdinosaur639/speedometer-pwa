@@ -12,6 +12,8 @@ body {
   display: flex;
   justify-content: space-around;
   width: 100%;
+  font-size: 6rem;
+  line-height: 6rem;
   text-align: center;
 }
 
