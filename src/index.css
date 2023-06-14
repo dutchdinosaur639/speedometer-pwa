@@ -1,9 +1,6 @@
 body {
   background: radial-gradient(ellipse at center, #ffffff 0%,#d3d3d3 100%);
   overflow: hidden;
-}
-
-body {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,46 +8,34 @@ body {
   flex-direction: column;
 }
 
-body > div {
+#readouts {
+  display: flex;
+  justify-content: space-around;
   width: 100%;
   text-align: center;
 }
 
-#readout {
-  font-size: 12rem;
-  font-family: sans-serif;
-  line-height: 12rem;
-}
+@media screen and (max-width: 600px) {
+  #readouts {
+    flex-direction: column;
+  }
+  
+  #readout-speed, #readout-watt {
+    font-size: 6rem;
+    line-height: 6rem;
+  }
 
-button {
-  padding: 1rem 2rem;
-  border-radius: 10px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  font-size: 1.5rem;
-  text-transform: uppercase;
+  button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
 }
 
 button:focus {
   outline: none;
 }
 
-#show-mph {
-  border-radius: 10px 0px 0 10px;
-  margin-right: -6px;
-}
-
-#show-kmh {
-  border-radius: 0px 10px 10px 0px;
-}
-
-.selected {
-  background-color: hotpink;
-  color: #fff;
-}
-
 #start {
-  margin-top: 1rem;
   background-color: hsl(114, 96%, 92%);
 }
 
@@ -70,13 +55,7 @@ body.dark button {
   color: #01a003;
 }
 
-body.dark .selected {
-  background-color: #01a003;
-  color: #fff;
-}
-
 body.dark #start {
-  margin-top: 1rem;
   background-color: hsl(114, 100%, 18%);
 }
 
@@ -86,7 +65,6 @@ body.dark #start.selected {
   border-color: hsl(15, 100%, 18%);
 }
 
-#history {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-}
+.unit { 
+   font-size: 6rem;  /* Pas dit naar wens aan */ 
+ }
