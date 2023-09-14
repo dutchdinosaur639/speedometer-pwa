@@ -113,3 +113,4 @@ const startWakeLock = () => {
 };
 
 startAmbientSensor();
+// Comment
